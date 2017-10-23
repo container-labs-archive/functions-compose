@@ -1,0 +1,13 @@
+
+env: local
+yarn: true
+services:
+  folder1:
+    directory: functionsES6/example/folder1
+    functions:
+      name: folder1
+
+  folder2:
+    directory: functionsES6/example/folder2
+    functions:
+      name: folder2

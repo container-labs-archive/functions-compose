@@ -1,0 +1,70 @@
+{
+  "name": "@containerlabs/functions-compose",
+  "version": "0.35.0",
+  "description": "like webpack and docker-compose had a three-way with functions-emulator",
+  "main": "index.js",
+  "dependencies": {
+    "babel-runtime": "^7.0.0-beta.3",
+    "fb-watchman": "^2.0.0",
+    "js-yaml": "^3.10.0",
+    "path": "^0.12.7"
+  },
+  "bin": {
+    "functions-compose": "./functions/bin/functions-compose.js"
+  },
+  "devDependencies": {
+    "@containerlabs/funpack": "^0.5.0",
+    "babel-preset-env": "^7.0.0-beta.3",
+    "babel-preset-flow": "^7.0.0-beta.3",
+    "babel-preset-stage-2": "^7.0.0-beta.3",
+    "babel-plugin-add-module-exports": "0.2.1",
+    "babel-plugin-transform-imports": "^1.4.1",
+    "babel-plugin-transform-runtime": "^7.0.0-beta.3",
+    "babel-plugin-transform-inline-environment-variables": "^0.2.0",
+    "babel-eslint": "^8.0.1",
+    "eslint": "4.8.0",
+    "eslint-config-airbnb": "15.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.1.0",
+    "flow-bin": "^0.57.3"
+  },
+  "peerDependencies": {
+    "@containerlabs/funpack": "^0.4.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node functions/index.js",
+    "package-functions-production": "funpack -e production",
+    "ppare-deploy": "npm run package-functions-production",
+    "postppare-deploy": "chmod 755 functions/bin/functions-compose.js && npm version minor",
+    "predeploy": "npm run ppare-deploy",
+    "deploy": "npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/container-labs/functions-compose.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "node": "6.11.1"
+          }
+        }
+      ],
+      "stage-2",
+      "flow"
+    ],
+    "plugins": [
+      "add-module-exports",
+      "transform-runtime",
+      "transform-imports",
+      "transform-inline-environment-variables"
+    ]
+  }
+}
