@@ -86,16 +86,16 @@ client.capabilityCheck({
     });
   });
   client.on('subscription', resp => {
-    console.log('#### subscription response', resp.subscription);
+    console.debug('#### subscription response', resp.subscription);
     const thisSubscription = ourSubsciptions[resp.subscription];
 
     if (resp['state-leave']) {
-      console.log('### bailing state-leave');
+      console.debug('### bailing, state-leave');
       return;
     }
 
     if (resp['state-enter']) {
-      console.log('#### resp state-enter');
+      console.debug('#### state-enter, onFileChanged');
       (0, _onFileChanged.default)(client, thisSubscription, globalContext);
       return;
     }
@@ -111,7 +111,7 @@ client.capabilityCheck({
         console.error(stateEnterError);
       }
 
-      console.log('#### state leave', resp2.root);
+      console.debug('#### state-enter, command', resp2.root);
     });
   });
 });

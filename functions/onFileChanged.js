@@ -33,13 +33,13 @@ function onFileChanged(client, thisSubscription, globalContext) {
   const yarnOrNpmRun = globalContext.yarn ? 'yarn' : 'npm run';
   const yarnOrNpm = globalContext.yarn ? 'yarn' : 'npm';
   const packagePromise = new _promise.default((resolve, reject) => {
-    console.log('#### package promise starting');
+    console.debug('#### package promise starting');
     const packageCommand = `${yarnOrNpmRun} package-functions-${globalContext.env}`;
     const installCommand = `cd functions && ${yarnOrNpm} install`;
     const command = `cd ${serviceContext.directory} && cd ../ && ${packageCommand} && ${installCommand}`;
     console.log(`#### ${command}`);
     exec(command, (error, stdout, stderr) => {
-      console.log('#### exec done');
+      console.debug('#### exec done');
       logResult(error, stdout, stderr);
 
       if (error || stderr) {
@@ -58,7 +58,7 @@ function onFileChanged(client, thisSubscription, globalContext) {
   });
   const topicOrHttp = functionSettings.topic ? `--trigger-topic ${functionSettings.topic}` : '--trigger-http';
   packagePromise.then(() => {
-    console.log('#### package promise done');
+    console.debug('#### package promise done');
 
     if (functionSettings.deploy !== undefined && !functionSettings.deploy.auto) {
       console.log('#### auto deploy off, skipping');
@@ -72,13 +72,13 @@ function onFileChanged(client, thisSubscription, globalContext) {
       logResult(error, stdout, stderr);
     });
   }).finally(() => {
-    console.log('##### leaving', thisSubscription.watchWithFolder, thisSubscription.stateName);
+    console.debug('##### leaving', thisSubscription.watchWithFolder, thisSubscription.stateName);
     client.command(['state-leave', thisSubscription.watchWithFolder, thisSubscription.stateName], (error, resp2) => {
       if (error) {
         console.error(error);
       }
 
-      console.log('#### state leave', resp2.root);
+      console.debug('#### state leave', resp2.root);
     });
   });
 }
